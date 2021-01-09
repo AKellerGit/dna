@@ -1,6 +1,7 @@
 {
   "name": "frontend",
-  "proxy": "http://{username}.github.io/dnaconstruction",
+  "proxy": "http://localhost:5000",
+  "homepage": "https://isomorphic-not.github.io/dna",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
