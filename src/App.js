@@ -24,7 +24,8 @@ class App extends React.Component {
         infinite="true" 
         autoPlayInterval="4000" 
         items={items} 
-        />
+        >test
+          </AliceCarousel>
       )
   }
 }
