@@ -6,6 +6,7 @@ function App() {
   return (
     <div className="App">
       <p>test</p>
+      <img src="/dna.png"></img>
     </div>
   );
 }
