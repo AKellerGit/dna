@@ -1,31 +1,45 @@
-import React from 'react';
-import './App.css';
-import AliceCarousel from 'react-alice-carousel';
-import 'react-alice-carousel/lib/alice-carousel.css';
+import React, { useRef, useEffect } from 'react';
+import { useLocation, Switch } from 'react-router-dom';
+import AppRoute from './utils/AppRoute';
+import ScrollReveal from './utils/ScrollReveal';
+import ReactGA from 'react-ga';
 
+// Layouts
+import LayoutDefault from './layouts/LayoutDefault';
 
-const handleDragStart = (e) => e.preventDefault();
+// Views 
+import Home from './views/Home';
 
-const items = [
-  <img src="dna.png" width="250" onDragStart={handleDragStart} className="center-carousel" />,
-  <img src="stock2.png" onDragStart={handleDragStart} className="center-carousel" />,
-  <img src="stock3.png" onDragStart={handleDragStart} className="center-carousel" />,
-];
+// Initialize Google Analytics
+ReactGA.initialize(process.env.REACT_APP_GA_CODE);
 
+const trackPage = page => {
+  ReactGA.set({ page });
+  ReactGA.pageview(page);
+};
 
-class App extends React.Component {
-  render() {
-      return (
-        <AliceCarousel 
-        disableDotsControls="true"
-        disableButtonsControls="true"
-        className="center-carousel" 
-        autoPlay="true" 
-        infinite="true" 
-        autoPlayInterval="4000" 
-        items={items} 
-        />
-      )
-  }
+const App = () => {
+
+  const childRef = useRef();
+  let location = useLocation();
+
+  useEffect(() => {
+    const page = location.pathname;
+    document.body.classList.add('is-loaded')
+    childRef.current.init();
+    trackPage(page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
+
+  return (
+    <ScrollReveal
+      ref={childRef}
+      children={() => (
+        <Switch>
+          <AppRoute exact path="/" component={Home} layout={LayoutDefault} />
+        </Switch>
+      )} />
+  );
 }
+
 export default App;
